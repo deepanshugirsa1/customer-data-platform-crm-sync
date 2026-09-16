@@ -8,6 +8,24 @@ with identity resolution, deduplication, freshness SLAs, and low-latency query A
 > quality gates, and demo API run locally. Production Airbyte deployment, live ClickHouse cluster,
 > and CRM write-back auth are planned.
 
+## What works today vs. planned
+
+| Area | Status | Notes |
+|------|--------|-------|
+| TypeScript connectors (Salesforce, HubSpot) | Done | Airbyte-style contracts, incremental cursors, JSONL export handoff |
+| Ingestion → raw → staging → canonical | Done | DuckDB (ClickHouse-compatible) medallion layers |
+| Identity resolution & dedup | Done | Bucketing on email/domain/phone into canonical accounts |
+| Field-level reconciliation & confidence | Done | Most-recent-wins + source priority, config-driven weights |
+| Enrichment from third-party catalog | Done | Domain/firmographic enrichment merged into canonical |
+| Quality gates (completeness, freshness, dedupe) | Done | Run in `run_demo.py`, results persisted to `dq_results` |
+| dbt-style curated models + tests | Done | Unique/not-null/range + source freshness SLA |
+| Low-latency query API for AI workers | Done | FastAPI `src/api/query_api.py` |
+| Tests + CI | Done | pytest suite + GitHub Actions pipeline/type-check |
+| Live Salesforce/HubSpot OAuth | Planned | Currently mock connectors over sample extracts |
+| Production Airbyte + ClickHouse cluster | Planned | DuckDB stands in locally |
+| Bidirectional CRM write-back | Planned | Conflict resolution + idempotent upserts |
+| AuthN/Z + PII tokenization on API | Planned | Query API is open in the demo |
+
 ## Stack
 
 - **TypeScript** custom connectors (Salesforce, HubSpot)
