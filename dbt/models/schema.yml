@@ -1,0 +1,11 @@
+version: 2
+models:
+  - name: canonical_accounts
+    description: Deduplicated customer accounts for AI worker retrieval
+    columns:
+      - name: account_id
+        tests: [unique, not_null]
+      - name: email
+        tests: [unique]
+      - name: confidence
+        description: Merge confidence 0-1
