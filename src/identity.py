@@ -28,11 +28,11 @@ def resolve_identities() -> int:
         "SELECT source, record_id, email, company, phone, updated_at FROM staging_leads"
     ).fetchall()
 
-buckets: dict[str, list] = defaultdict(list)
-            for row in rows:
-                source, record_id, email, company, phone, updated_at = row
-                key = (email or "").lower() or (company or "").lower() or record_id
-                buckets[key].append(row)
+    buckets: dict[str, list] = defaultdict(list)
+    for row in rows:
+        source, record_id, email, company, phone, updated_at = row
+        key = (email or "").lower() or (company or "").lower() or record_id
+        buckets[key].append(row)
 
     con.execute("DELETE FROM canonical_accounts")
     merged = 0
