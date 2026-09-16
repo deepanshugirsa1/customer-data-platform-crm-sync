@@ -1,0 +1,12 @@
+match_keys:
+  - email
+  - domain
+  - phone_normalized
+rules:
+  - name: exact_email
+    weight: 1.0
+  - name: domain_company
+    weight: 0.7
+  - name: phone
+    weight: 0.6
+merge_strategy: highest_confidence_wins
